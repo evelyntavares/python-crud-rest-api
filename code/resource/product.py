@@ -17,41 +17,15 @@ class Product(Resource):
                         )
 
     def get(self, sku):
-        product = ProductModel.find_by_sku(sku)
-        if product:
-            return product.json()
-        else:
-            return {'message': 'Product not found'}, 404
+        return ProductModel.find_product(sku)
 
     def post(self, sku):
-        if ProductModel.find_by_sku(sku):
-            return {'message': 'A product with sku {} already exists.'.format(sku)}, 400
-
         data = Product.parser.parse_args()
-        product = ProductModel(**data)
-
-        try:
-            product.save()
-        except:
-            return {'message': 'An error occurred when saving the product'}, 500
-
-        return product.json(), 201
+        return ProductModel.create_product(sku, data)
 
     def put(self, sku):
-        product = ProductModel.find_by_sku(sku)
         data = Product.parser.parse_args()
-
-        if product is None:  # no product was found
-            product = ProductModel(**data)
-        else:
-            product.name = data['name']
-
-        product.save()
-        return product.json()
+        return ProductModel.update_product(sku, data)
 
     def delete(self, sku):
-        product = ProductModel.find_by_sku(sku)
-        if product:
-            product.delete()
-
-        return {'message': 'Item deleted.'}, 200
+        return ProductModel.delete(sku)
