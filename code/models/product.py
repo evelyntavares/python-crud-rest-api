@@ -16,7 +16,6 @@ class ProductModel(db.Model):
     def __init__(self, sku, name):
         self.sku = sku
         self.name = name
-        #self.available_quantity = available_quantity
 
     def json(self):
         available_quantity = 0
@@ -50,7 +49,7 @@ class ProductModel(db.Model):
         if product:
             product.name = data['name']
         else:
-            product = ProductModel(sku, **data)
+            product = ProductModel(**data)
 
         product.save()
         return product.json(), 200
@@ -65,7 +64,7 @@ class ProductModel(db.Model):
         if product:
             db.session.delete(product)
             db.session.commit()
-            return  {'message': 'Product deleted sucessfully.'}, 200
+            return {'message': 'Product deleted successfully.'}, 200
         else:
             return {'message': 'No product with sku {} was found to be deleted.'.format(sku)}, 404
 
