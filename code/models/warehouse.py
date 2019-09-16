@@ -44,7 +44,7 @@ class WarehouseModel(db.Model):
             try:
                 warehouse.save()
             except:
-                return {'message': 'An error occurred while saving saving warehouse.'}, 500
+                return {'message': 'An error occurred while saving warehouse.'}, 500
 
             return warehouse.json(), 200
 

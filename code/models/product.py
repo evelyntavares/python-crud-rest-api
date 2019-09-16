@@ -8,9 +8,6 @@ class ProductModel(db.Model):
     sku = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
 
-    # inventory_id = db.Column(db.Integer, db.ForeignKey('inventories.id'))
-    # inventory = db.relationship('InventoryModel')
-
     warehouses = db.relationship('WarehouseModel', lazy='dynamic')
 
     def __init__(self, sku, name):
@@ -40,7 +37,10 @@ class ProductModel(db.Model):
             return {'message': 'Product with sku {} already exists.'.format(sku)}, 400
         else:
             product = ProductModel(**data)
-            product.save()
+            try:
+                product.save()
+            except:
+                return {'message': 'An error occurred while saving product.'}, 500
             return product.json(), 201
 
     @classmethod
@@ -51,7 +51,10 @@ class ProductModel(db.Model):
         else:
             product = ProductModel(**data)
 
-        product.save()
+        try:
+            product.save()
+        except:
+            return {'message': 'An error occurred while saving product.'}, 500
         return product.json(), 200
 
     def save(self):
