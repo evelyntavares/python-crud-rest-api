@@ -4,6 +4,8 @@ from resource.product import Product
 
 
 app = Flask(__name__)
+app.config['PROPAGATE_EXCEPTIONS'] = True
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 api = Api(app)
 
 

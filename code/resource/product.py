@@ -25,7 +25,7 @@ class Product(Resource):
 
     def put(self, sku):
         data = Product.parser.parse_args()
-        return ProductModel.update_product(sku, data)
+        return ProductModel.update_product(sku, **data)
 
     def delete(self, sku):
         return ProductModel.delete(sku)
