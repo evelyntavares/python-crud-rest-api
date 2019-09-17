@@ -77,3 +77,7 @@ class WarehouseModel(db.Model):
         else:
             return {'message': 'No warehouse in {} with type {} was found to be deleted.'.format(
                 location=data['location'], type=data['type'])}, 404
+
+    @classmethod
+    def get_warehouse_list(cls):
+        return {'warehouses': [warehouse.json() for warehouse in cls.query.all()]}, 200

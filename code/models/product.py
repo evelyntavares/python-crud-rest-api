@@ -70,3 +70,6 @@ class ProductModel(db.Model):
         else:
             return {'message': 'No product with sku {} was found to be deleted.'.format(sku)}, 404
 
+    @classmethod
+    def get_product_list(cls):
+        return {'products': [product.json() for product in cls.query.all()]}, 200

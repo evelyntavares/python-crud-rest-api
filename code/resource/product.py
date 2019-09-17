@@ -33,4 +33,5 @@ class Product(Resource):
 
 class ProductList(Resource):
     def get(self):
-        return {'products': [product.json() for product in ProductModel.query.all()]}, 200
+        # return {'products': [product.json() for product in ProductModel.query.all()]}, 200
+        return ProductModel.get_product_list()

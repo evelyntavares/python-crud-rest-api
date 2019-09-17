@@ -46,4 +46,5 @@ class Warehouse(Resource):
 
 class WarehouseList(Resource):
     def get(self):
-        return {'warehouses': [warehouse.json() for warehouse in WarehouseModel.query.all()]}, 200
+        # return {'warehouses': [warehouse.json() for warehouse in WarehouseModel.query.all()]}, 200
+        return WarehouseModel.get_warehouse_list()
