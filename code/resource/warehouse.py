@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.warehouse import WarehouseModel
+from flask_jwt import jwt_required
 
 
 class Warehouse(Resource):
@@ -31,14 +32,17 @@ class Warehouse(Resource):
     def get(self, location):
         return WarehouseModel.find_warehouse(location)
 
+    @jwt_required()
     def post(self, location):
         data = Warehouse.parser.parse_args()
         return WarehouseModel.create_warehouse(data)
 
+    @jwt_required()
     def put(self, location):
         data = Warehouse.parser.parse_args()
         return WarehouseModel.update_warehouse(data)
 
+    @jwt_required()
     def delete(self, location):
         data = Warehouse.parser.parse_args()
         return WarehouseModel.delete_warehouse(data)
@@ -46,4 +50,4 @@ class Warehouse(Resource):
 
 class WarehouseList(Resource):
     def get(self):
-        return WarehouseModel.get_warehouse_list(), 200
+        return WarehouseModel.get_warehouse_list()

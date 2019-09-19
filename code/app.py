@@ -1,14 +1,22 @@
 from flask import Flask
 from flask_restful import Api
+from flask_jwt import JWT
 from resource.product import Product, ProductList
 from resource.warehouse import Warehouse, WarehouseList
+from resource.user import User
 from flask_swagger_ui import get_swaggerui_blueprint
+
+from security import authenticate, identity
 
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+# This key should not be publish in production
+app.secret_key = 'secret'
 api = Api(app)
+
+jwt = JWT(app, authenticate, identity)  # Creates /auth endpoint
 
 # Swagger configuration
 SWAGGER_URL = '/swagger'
@@ -30,6 +38,7 @@ api.add_resource(Product, '/api/products/<int:sku>')
 api.add_resource(ProductList, '/api/products')
 api.add_resource(Warehouse, '/api/warehouses/<string:location>')
 api.add_resource(WarehouseList, '/api/warehouses')
+api.add_resource(User, '/api/register-users')
 
 
 if __name__ == '__main__':

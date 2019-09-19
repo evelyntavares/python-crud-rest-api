@@ -34,11 +34,9 @@ class WarehouseModel(db.Model):
         warehouse = cls.query.filter_by(location=data['location'], type=data['type']).first()
 
         if warehouse:
-            print(warehouse)
             return {'message': 'A warehouse in {} with type {} already exists in database.'.format(
                 data['location'], data['type'])}, 400
         else:
-            print(data)
             warehouse = WarehouseModel(**data)
 
             try:
