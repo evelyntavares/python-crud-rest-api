@@ -25,7 +25,7 @@ class WarehouseModel(db.Model):
     def find_warehouse(cls, location):
         warehouse = cls.query.filter_by(location=location).first()
         if warehouse:
-            return warehouse.json()
+            return warehouse.json(), 200
         else:
             return {'message': 'Warehouse not found.'}, 404
 

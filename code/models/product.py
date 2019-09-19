@@ -25,7 +25,7 @@ class ProductModel(db.Model):
     def find_product(cls, sku):
         product = cls.query.filter_by(sku=sku).first()
         if product:
-            return product.json()
+            return product.json(), 200
         else:
             return {'message': 'Product not found'}, 404
 

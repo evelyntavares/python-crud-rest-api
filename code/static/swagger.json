@@ -1,0 +1,288 @@
+swagger: "2.0"
+info:
+  description: "This is a sample API REST in Python.  You can find out more about     this API in https://github.com/evelyntavares/python-rest-api-crud.git."
+  version: "1.0.0"
+  title: "Python REST CRUD API"
+tags:
+- name: "product"
+  description: "Everything about your Products"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "warehouse"
+  description: "Everything about your Warehouses"
+- name: "user"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /product/{sku}:
+    get:
+      tags:
+      - "product"
+      summary: "Finds product by sku"
+      description: ""
+      operationId: "findProductBySku"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "sku"
+        in: "path"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+
+      responses:
+        200:
+          description: "Product found"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+        404:
+          description: "Product not found"
+    post:
+      tags:
+      - "product"
+      summary: "Add a new product"
+      description: ""
+      operationId: "addProduct"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "sku"
+        description: "Product id that needs to be added"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Product object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        201:
+          description: "Product created successfully"
+    put:
+      tags:
+      - "product"
+      summary: "Update an existing product"
+      description: ""
+      operationId: "updateProduct"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "sku"
+        description: "Product object that needs to be added/updated"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Product object that needs to be added/updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        201:
+          description: "Product created successfully"
+        400:
+          description: "Product with sku informed already exists"
+        500:
+          description: "An error occurred while saving product"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+    delete:
+      tags:
+      - "product"
+      summary: "Deletes a product"
+      description: ""
+      operationId: "deleteProduct"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "sku"
+        in: "path"
+        description: "Product id to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Product deleted successfully"
+        404:
+          description: "No product with sku informed was found to be deleted"
+  /warehouse/{location}:
+    get:
+      tags:
+      - "warehouse"
+      summary: "Returns warehouses by location"
+      description: "Returns warehouses by location"
+      operationId: "getWarehouse"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "location"
+        in: "path"
+        description: "Location of the warehouse that needs to be fetched"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Product deleted successfully"
+        404:
+          description: "No product with sku informed was found to be deleted"
+    post:
+      tags:
+      - "warehouse"
+      summary: "Add a new warehouse"
+      description: ""
+      operationId: "addWarehouse"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "location"
+        description: "Warehouse id that needs to be added"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Warehouse object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Warehouse"
+      responses:
+        201:
+          description: "Product created successfully"
+        400:
+          description: "A warehouse with location and type informed already exists in database"
+        500:
+          description: "An error occurred while saving warehouse"
+    put:
+      tags:
+      - "warehouse"
+      summary: "Update an existing warehouse"
+      description: ""
+      operationId: "updateWarehouse"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "location"
+        description: "Warehouse object that needs to be added/updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Warehouse object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Warehouse"
+      responses:
+        201:
+          description: "Product created successfully"
+        500:
+          description: "An error occurred while saving product"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+    delete:
+      tags:
+      - "warehouse"
+      summary: "Deletes a warehouse"
+      description: ""
+      operationId: "deleteWarehouse"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "location"
+        in: "path"
+        description: "Warehouse id to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Warehouse deleted successfully"
+        404:
+          description: "No warehouse with location informed was found to be deleted"
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Product:
+    type: "object"
+    properties:
+      sku:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      warehouses:
+        type: "array"
+        items:
+          type: "object"
+    xml:
+      name: "Product"
+  Warehouse:
+    type: "object"
+    properties:
+      location:
+        type: "string"
+      quantity:
+        type: "integer"
+        format: "int64"
+      type:
+        type: "string"
+    xml:
+      name: "Category"
+
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
