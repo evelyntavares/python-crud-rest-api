@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "8cb4d225-7ee7-466e-b117-55cf649c5665",
+		"name": "python-rest-crud-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/products/<sku>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/products/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/products",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warehouses/<location>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/warehouses/SP",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"warehouses",
+						"SP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warehouses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/warehouses",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/<sku>",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sku\": 1,\n    \"name\": \"Black bean - 1 KG\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/products/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warehouses/<location>",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\": \"SP\",\n    \"quantity\": 10,\n    \"type\": \"ECOMMERCE\",\n    \"product_sku\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/warehouses/SP",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"warehouses",
+						"SP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/<sku>",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sku\": 1,\n    \"name\": \"bla\",\n    \"inventory_id\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/products/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warehouses/<location>",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\": \"SP\",\n    \"quantity\": 10,\n    \"type\": \"ECOMMERCE\",\n    \"product_sku\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/warehouses/SP",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"warehouses",
+						"SP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/<sku>",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/products/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warehouses/<location>",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\": \"SP\",\n    \"quantity\": 100,\n    \"type\": \"ECOMMERCE\",\n    \"product_sku\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/warehouses/SP",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"warehouses",
+						"SP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1550814e-79d8-4ce1-ba74-cadda511c826",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.environment.set(\"jwt_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user\",\n    \"password\": \"user123\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/auth",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/register-users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user\",\n    \"password\": \"user123\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/register-users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"register-users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
