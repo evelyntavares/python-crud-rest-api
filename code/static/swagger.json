@@ -1,288 +1,321 @@
-swagger: "2.0"
+openapi: 3.0.1
 info:
-  description: "This is a sample API REST in Python.  You can find out more about     this API in https://github.com/evelyntavares/python-rest-api-crud.git."
-  version: "1.0.0"
-  title: "Python REST CRUD API"
+  title: Python REST CRUD API
+  description: This is a sample API REST in Python.  You can find out more about     this
+    API in https://github.com/evelyntavares/python-rest-api-crud.git.
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://localhost:5000
 tags:
-- name: "product"
-  description: "Everything about your Products"
-  externalDocs:
-    description: "Find out more"
-    url: "http://swagger.io"
-- name: "warehouse"
-  description: "Everything about your Warehouses"
-- name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
-schemes:
-- "https"
-- "http"
+- name: product
+  description: Everything about your Products
+- name: warehouse
+  description: Everything about your Warehouses
+- name: users
+  description: Operations related to users
 paths:
   /product/{sku}:
     get:
       tags:
-      - "product"
-      summary: "Finds product by sku"
-      description: ""
-      operationId: "findProductBySku"
-      produces:
-      - "application/xml"
-      - "application/json"
+      - product
+      summary: Finds product by sku
+      operationId: findProductBySku
       parameters:
-      - name: "sku"
-        in: "path"
-        description: "Status values that need to be considered for filter"
-        required: true
-        type: "string"
-
-      responses:
-        200:
-          description: "Product found"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Product"
-        404:
-          description: "Product not found"
-    post:
-      tags:
-      - "product"
-      summary: "Add a new product"
-      description: ""
-      operationId: "addProduct"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "path"
-        name: "sku"
-        description: "Product id that needs to be added"
-        required: true
-        type: "integer"
-      - in: "body"
-        name: "body"
-        description: "Product object that needs to be added"
+      - name: sku
+        in: path
+        description: Status values that need to be considered for filter
         required: true
         schema:
-          $ref: "#/definitions/Product"
+          type: string
       responses:
-        201:
-          description: "Product created successfully"
+        200:
+          description: Product found
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        404:
+          description: Product not found
     put:
       tags:
-      - "product"
-      summary: "Update an existing product"
-      description: ""
-      operationId: "updateProduct"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
+      - product
+      summary: Update an existing product
+      operationId: updateProduct
       parameters:
-      - in: "path"
-        name: "sku"
-        description: "Product object that needs to be added/updated"
-        required: true
-        type: "integer"
-      - in: "body"
-        name: "body"
-        description: "Product object that needs to be added/updated"
+      - name: sku
+        in: path
+        description: Product object that needs to be added/updated
         required: true
         schema:
-          $ref: "#/definitions/Product"
+          type: integer
+      requestBody:
+        description: Product object that needs to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
       responses:
         201:
-          description: "Product created successfully"
-        400:
-          description: "Product with sku informed already exists"
+          description: Product created successfully
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
         500:
-          description: "An error occurred while saving product"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
+          $ref: '#/components/responses/InternalError'
+    post:
+      tags:
+      - product
+      summary: Add a new product
+      operationId: addProduct
+      parameters:
+      - name: sku
+        in: path
+        description: Product id that needs to be added
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Product object that needs to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        201:
+          description: Product created successfully
+        400:
+          description: Product with sku informed already exists
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalError'
     delete:
       tags:
-      - "product"
-      summary: "Deletes a product"
-      description: ""
-      operationId: "deleteProduct"
-      produces:
-      - "application/xml"
-      - "application/json"
+      - product
+      summary: Deletes a product
+      operationId: deleteProduct
       parameters:
-      - name: "sku"
-        in: "path"
-        description: "Product id to be deleted"
+      - name: sku
+        in: path
+        description: Product id to be deleted
         required: true
-        type: "integer"
-        format: "int64"
+        schema:
+          type: integer
+          format: int64
       responses:
         200:
-          description: "Product deleted successfully"
+          description: Product deleted successfully
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
         404:
-          description: "No product with sku informed was found to be deleted"
+          description: No product with sku informed was found to be deleted
   /warehouse/{location}:
     get:
       tags:
-      - "warehouse"
-      summary: "Returns warehouses by location"
-      description: "Returns warehouses by location"
-      operationId: "getWarehouse"
-      produces:
-      - "application/json"
+      - warehouse
+      summary: Returns warehouses by location
+      description: Returns warehouses by location
+      operationId: getWarehouse
       parameters:
-      - name: "location"
-        in: "path"
-        description: "Location of the warehouse that needs to be fetched"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "Product deleted successfully"
-        404:
-          description: "No product with sku informed was found to be deleted"
-    post:
-      tags:
-      - "warehouse"
-      summary: "Add a new warehouse"
-      description: ""
-      operationId: "addWarehouse"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "path"
-        name: "location"
-        description: "Warehouse id that needs to be added"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Warehouse object that needs to be added"
+      - name: location
+        in: path
+        description: Location of the warehouse that needs to be fetched
         required: true
         schema:
-          $ref: "#/definitions/Warehouse"
+          type: string
       responses:
-        201:
-          description: "Product created successfully"
-        400:
-          description: "A warehouse with location and type informed already exists in database"
-        500:
-          description: "An error occurred while saving warehouse"
+        200:
+          description: Product deleted successfully
+        404:
+          description: No product with sku informed was found to be deleted
     put:
       tags:
-      - "warehouse"
-      summary: "Update an existing warehouse"
-      description: ""
-      operationId: "updateWarehouse"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
+      - warehouse
+      summary: Update an existing warehouse
+      operationId: updateWarehouse
       parameters:
-      - in: "path"
-        name: "location"
-        description: "Warehouse object that needs to be added/updated"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Warehouse object that needs to be added"
+      - name: location
+        in: path
+        description: Warehouse object that needs to be added/updated
         required: true
         schema:
-          $ref: "#/definitions/Warehouse"
+          type: string
+      requestBody:
+        description: Warehouse object that needs to be added/updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+        required: true
       responses:
         201:
-          description: "Product created successfully"
+          description: Product created successfully
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
         500:
-          description: "An error occurred while saving product"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
+          $ref: '#/components/responses/InternalError'
+    post:
+      tags:
+      - warehouse
+      summary: Add a new warehouse
+      operationId: addWarehouse
+      parameters:
+      - name: location
+        in: path
+        description: Warehouse location that needs to be added
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Warehouse object that needs to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+        required: true
+      responses:
+        201:
+          description: Product created successfully
+        400:
+          description: A warehouse with location and type informed already exists
+            in database
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalError'
     delete:
       tags:
-      - "warehouse"
-      summary: "Deletes a warehouse"
-      description: ""
-      operationId: "deleteWarehouse"
-      produces:
-      - "application/xml"
-      - "application/json"
+      - warehouse
+      summary: Deletes a warehouse
+      operationId: deleteWarehouse
       parameters:
-      - name: "location"
-        in: "path"
-        description: "Warehouse id to be deleted"
+      - name: location
+        in: path
+        description: Warehouse id to be deleted
         required: true
-        type: "string"
+        schema:
+          type: string
       responses:
         200:
-          description: "Warehouse deleted successfully"
+          description: Warehouse deleted successfully
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
         404:
-          description: "No warehouse with location informed was found to be deleted"
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
-definitions:
-  Product:
-    type: "object"
-    properties:
-      sku:
-        type: "integer"
-        format: "int64"
-      name:
-        type: "string"
-      warehouses:
-        type: "array"
-        items:
-          type: "object"
-    xml:
-      name: "Product"
-  Warehouse:
-    type: "object"
-    properties:
-      location:
-        type: "string"
-      quantity:
-        type: "integer"
-        format: "int64"
-      type:
-        type: "string"
-    xml:
-      name: "Category"
-
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
-      message:
-        type: "string"
-externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+          description: No warehouse with location informed was found to be deleted
+  /auth:
+    post:
+      tags:
+      - users
+      summary: Authenticate user
+      operationId: authenticateUser
+      requestBody:
+        description: User that needs to be authenticated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          description: Returns a valid access token
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /api/register-users:
+    post:
+      tags:
+      - users
+      summary: Register user
+      operationId: registerUser
+      requestBody:
+        description: User that needs to be registered
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          description: User created successfully
+        400:
+          description: Username informed already exists in database
+        500:
+          description: An error occurred while saving saving user
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        sku:
+          type: integer
+          format: int64
+        name:
+          type: string
+        warehouses:
+          type: array
+          items:
+            type: object
+            properties: {}
+      xml:
+        name: Product
+    Warehouse:
+      type: object
+      properties:
+        location:
+          type: string
+        quantity:
+          type: integer
+          format: int64
+        type:
+          type: string
+        product_sku:
+          type: integer
+      xml:
+        name: Warehouse
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      xml:
+        name: User
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Signature has expired - Invalid token
+    InternalError:
+      description: An error occurred while saving record
