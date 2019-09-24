@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Python REST CRUD API
-  description: This is a sample API REST in Python.  You can find out more about     this
+  description: This is a sample API REST in Python. You can find out more about this
     API in https://github.com/evelyntavares/python-rest-api-crud.git.
   version: 1.0.0
 externalDocs:
@@ -17,7 +17,27 @@ tags:
 - name: users
   description: Operations related to users
 paths:
-  /product/{sku}:
+  /api/products:
+    get:
+      tags:
+      - product
+      summary: Finds all products
+      operationId: findProducts
+      responses:
+        200:
+          description: Product found
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /api/products/{sku}:
     get:
       tags:
       - product
@@ -49,7 +69,7 @@ paths:
     put:
       tags:
       - product
-      summary: Update an existing product
+      summary: Updates an existing product
       operationId: updateProduct
       parameters:
       - name: sku
@@ -78,12 +98,12 @@ paths:
     post:
       tags:
       - product
-      summary: Add a new product
+      summary: Adds a new product
       operationId: addProduct
       parameters:
       - name: sku
         in: path
-        description: Product id that needs to be added
+        description: Product sku that needs to be added
         required: true
         schema:
           type: integer
@@ -114,7 +134,7 @@ paths:
       parameters:
       - name: sku
         in: path
-        description: Product id to be deleted
+        description: Product sku to be deleted
         required: true
         schema:
           type: integer
@@ -126,12 +146,22 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         404:
           description: No product with sku informed was found to be deleted
-  /warehouse/{location}:
+  /api/warehouses:
     get:
       tags:
       - warehouse
-      summary: Returns warehouses by location
-      description: Returns warehouses by location
+      summary: Finds all warehouses
+      description: Finds all warehouses
+      operationId: getWarehouses
+      responses:
+        200:
+          description: Product deleted successfully
+  /api/warehouses/{location}:
+    get:
+      tags:
+      - warehouse
+      summary: Finds warehouses by location
+      description: Finds warehouses by location
       operationId: getWarehouse
       parameters:
       - name: location
@@ -148,7 +178,7 @@ paths:
     put:
       tags:
       - warehouse
-      summary: Update an existing warehouse
+      summary: Updates an existing warehouse
       operationId: updateWarehouse
       parameters:
       - name: location
@@ -177,7 +207,7 @@ paths:
     post:
       tags:
       - warehouse
-      summary: Add a new warehouse
+      summary: Adds a new warehouse
       operationId: addWarehouse
       parameters:
       - name: location
@@ -214,7 +244,7 @@ paths:
       parameters:
       - name: location
         in: path
-        description: Warehouse id to be deleted
+        description: Warehouse location to be deleted
         required: true
         schema:
           type: string
@@ -229,7 +259,7 @@ paths:
     post:
       tags:
       - users
-      summary: Authenticate user
+      summary: Authenticates user
       operationId: authenticateUser
       requestBody:
         description: User that needs to be authenticated
@@ -250,7 +280,7 @@ paths:
     post:
       tags:
       - users
-      summary: Register user
+      summary: Registers user
       operationId: registerUser
       requestBody:
         description: User that needs to be registered
