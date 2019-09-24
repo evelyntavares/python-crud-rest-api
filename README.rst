@@ -47,22 +47,22 @@ After getting a valid token, it is necessary to pass this token in the header of
 Endpoints
 ------------
 Users:
-/auth - Authenticates user
-/api/register-users - Registers user
+ - /auth - Authenticates user
+ - /api/register-users - Registers user
 
 Products:
-GET /api/products          - Finds all products
-GET /api/products/{sku}    - Finds product by sku
-PUT /api/products/{sku}    - Updates an existing product
-POST /api/products/{sku}   - Adds a new product
-DELETE /api/products/{sku} - Deletes a product
+ - GET /api/products          - Finds all products
+ - GET /api/products/{sku}    - Finds product by sku
+ - PUT /api/products/{sku}    - Updates an existing product
+ - POST /api/products/{sku}   - Adds a new product
+ - DELETE /api/products/{sku} - Deletes a product
 
 Warehouses:
-GET /api/warehouses                - Finds all warehouses
-GET /api/warehouses/{location}    - Finds warehouses by location
-PUT /api/warehouses/{location}    - Updates an existing warehouse
-POST /api/warehouses/{location}   - Adds a new warehouse
-DELETE /api/warehouses/{location} - Deletes a warehouse
+ - GET /api/warehouses                - Finds all warehouses
+ - GET /api/warehouses/{location}    - Finds warehouses by location
+ - PUT /api/warehouses/{location}    - Updates an existing warehouse
+ - POST /api/warehouses/{location}   - Adds a new warehouse
+ - DELETE /api/warehouses/{location} - Deletes a warehouse
 
 There is a swagger documentation with more details on:
 http://localhost:5000/swagger/.
